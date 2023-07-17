@@ -8,10 +8,15 @@ const sleepSchema = mongoose.Schema({
     type: Number,
     default: 0,
   },
-  day:{
-    type:"String",
-    required:true
-  }
+  day: {
+    type: "String",
+    required: true,
+  },
+  exp: {
+    type: Date,
+    required: true,
+    index: { expires: "7d" },
+  },
 });
 
 module.exports = mongoose.model("Sleep", sleepSchema);

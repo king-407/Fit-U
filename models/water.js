@@ -1,16 +1,15 @@
 const mongoose = require("mongoose");
-const cycleSchema = mongoose.Schema({
+const waterSchema = mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
     require: true,
   },
-  distance: {
+  litres: {
     type: Number,
     default: 0,
   },
   day: {
-    type: String,
-
+    type: "String",
     required: true,
   },
   exp: {
@@ -20,4 +19,4 @@ const cycleSchema = mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model("Cycle", cycleSchema);
+module.exports = mongoose.model("Water", waterSchema);

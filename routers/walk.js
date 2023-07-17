@@ -1,21 +1,21 @@
-const Cycle = require("../models/cycle");
+const Walk = require("../models/walk");
 const express = require("express");
 const auth = require("../middleware/auth");
 const router = express.Router();
 
 router.get("/", auth, async (req, res) => {
   try {
-    const cycleInfo = await Cycle.find({ user: req.user });
-    if (cycleInfo.length > 0) {
-      res.status(200).send(cycleInfo);
-    } else if (cycleInfo.length == 0) {
+    const walkInfo = await Walk.find({ user: req.user });
+    if (walkInfo.length > 0) {
+      res.status(200).send(walkInfo);
+    } else if (walkInfo.length == 0) {
       res.json({ msg: "You have not started the challenge" });
     }
   } catch (e) {}
 });
-router.get("/get/cycle", auth, async (req, res) => {
+router.get("/get/walk", auth, async (req, res) => {
   try {
-    const walkInfo = await Cycle.find({ user: req.user });
+    const walkInfo = await Walk.find({ user: req.user });
     if (walkInfo.length > 0) {
       const totalWaterIntake = walkInfo.reduce(
         (sum, record) => sum + record.distance,
@@ -43,7 +43,7 @@ router.post("/", auth, async (req, res) => {
   const d = new Date();
   const day = daysOfWeek[d.getDay()];
 
-  const user = new Cycle({
+  const user = new Walk({
     user: req.user,
     distance: req.body.distance,
     day,

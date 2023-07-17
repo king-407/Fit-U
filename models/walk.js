@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const cycleSchema = mongoose.Schema({
+const walkSchema = mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
     require: true,
@@ -20,4 +20,4 @@ const cycleSchema = mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model("Cycle", cycleSchema);
+module.exports = mongoose.model("Walk", walkSchema);

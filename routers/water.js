@@ -1,24 +1,25 @@
-const Cycle = require("../models/cycle");
+const Water = require("../models/water");
 const express = require("express");
 const auth = require("../middleware/auth");
 const router = express.Router();
-
 router.get("/", auth, async (req, res) => {
   try {
-    const cycleInfo = await Cycle.find({ user: req.user });
-    if (cycleInfo.length > 0) {
-      res.status(200).send(cycleInfo);
-    } else if (cycleInfo.length == 0) {
+    const walkInfo = await Water.find({ user: req.user });
+    if (walkInfo.length > 0) {
+      res.status(200).send(walkInfo);
+    } else if (walkInfo.length == 0) {
       res.json({ msg: "You have not started the challenge" });
     }
-  } catch (e) {}
+  } catch (e) {
+    console.log(e);
+  }
 });
-router.get("/get/cycle", auth, async (req, res) => {
+router.get("/get/water", auth, async (req, res) => {
   try {
-    const walkInfo = await Cycle.find({ user: req.user });
+    const walkInfo = await Water.find({ user: req.user });
     if (walkInfo.length > 0) {
       const totalWaterIntake = walkInfo.reduce(
-        (sum, record) => sum + record.distance,
+        (sum, record) => sum + record.litres,
         0
       );
       const averageWaterIntake = totalWaterIntake / walkInfo.length;
@@ -43,9 +44,9 @@ router.post("/", auth, async (req, res) => {
   const d = new Date();
   const day = daysOfWeek[d.getDay()];
 
-  const user = new Cycle({
+  const user = new Water({
     user: req.user,
-    distance: req.body.distance,
+    litres: req.body.litres,
     day,
     exp: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
   });
