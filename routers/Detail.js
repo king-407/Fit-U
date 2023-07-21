@@ -34,6 +34,16 @@ router.get("/avg", auth, async (req, res) => {
     console.log(e);
   }
 });
+
+router.get("/get", auth, async (req, res) => {
+  try {
+    const result = await Detail.find({ user: req.user });
+    res.status(200).send(result);
+  } catch (e) {
+    res.status(500).send("Internal server error");
+  }
+  res.status(200).send(result);
+});
 router.get("/get/:entry", auth, async (req, res) => {
   const ent = req.params.entry;
   const result = await Detail.find({ user: req.user }).select(`${ent} day`);
