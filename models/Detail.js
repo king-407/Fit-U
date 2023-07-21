@@ -1,16 +1,28 @@
 const mongoose = require("mongoose");
-const sleepSchema = mongoose.Schema({
+const detailSchema = mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
     require: true,
   },
-  hours: {
+  cycle: {
+    type: Number,
+    default: 0,
+  },
+  sleep: {
+    type: Number,
+    default: 0,
+  },
+  walk: {
+    type: Number,
+    default: 0,
+  },
+  water: {
     type: Number,
     default: 0,
   },
   day: {
     type: "String",
-    required: true,
+    default: 0,
   },
   exp: {
     type: Date,
@@ -19,4 +31,4 @@ const sleepSchema = mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model("Sleep", sleepSchema);
+module.exports = mongoose.model("Detail", detailSchema);

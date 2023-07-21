@@ -6,7 +6,6 @@ const auth = async (req, res, next) => {
     return res.status(401).json({ error: "you must be logged in" });
   }
   try {
-    console.log(authorization);
     const { userId } = jwt.verify(authorization, "hihihi");
     if (userId) req.user = userId;
     else return res.status(201).json({ msg: "Invalid id" });
