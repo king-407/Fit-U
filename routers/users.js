@@ -2,21 +2,53 @@ const User = require("../models/users");
 const express = require("express");
 const jwt = require("jsonwebtoken");
 const router = express.Router();
-
+const nodemailer = require("nodemailer");
+const sendMail = async (name, email) => {
+  try {
+    const transporter = nodemailer.createTransport({
+      host: "smtp.gmail.com",
+      port: 587,
+      secure: false,
+      requireTLS: true,
+      auth: {
+        user: "shivamtiwaritiwari0704@gmail.com",
+        pass: "waolhboprgetbmfs",
+      },
+    });
+    const mailOptions = {
+      from: "shivamtiwaritiwari0704@gmail.com",
+      to: email,
+      subject: "For verification",
+      html: "<p> Hii " + name + " ,Welcone to Fit-U",
+    };
+    transporter.sendMail(mailOptions, function (error, info) {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log(info);
+      }
+    });
+  } catch (e) {}
+};
 router.post("/", async (req, res) => {
   try {
+    const { name, email, password } = req.body;
+    if (!email | !email || !password) {
+      return res.status(200).send("Please provide details");
+    }
     const person = await User.findOne({ email: req.body.email });
     if (person) {
       return res.status(202).json({ msg: "User with email exists exists" });
     }
     const user = new User({
-      name: req.body.name,
-      email: req.body.email,
-      password: req.body.password,
+      name,
+      email,
+      password,
     });
     user
       .save()
       .then((created) => {
+        sendMail(req.body.name, req.body.email);
         res.status(201).json({ msg: "Registeration successfull" });
       })
       .catch((err) => {

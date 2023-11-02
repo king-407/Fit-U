@@ -24,11 +24,15 @@ router.get("/avg", auth, async (req, res) => {
         },
       },
     ]);
+    if (totalInfo.length == 0) {
+      return res.status(200).json({ message: "You need to start" });
+    }
+    console.log(totalInfo);
     res.status(200).json({
-      water: totalInfo[0].Water,
-      cycle: totalInfo[0].Cycle,
-      sleep: totalInfo[0].Sleep,
-      walk: totalInfo[0].Walk,
+      water: Math.round((totalInfo[0].Water * 100) / 100),
+      cycle: Math.round((totalInfo[0].Cycle * 100) / 100),
+      sleep: Math.round((totalInfo[0].Sleep * 100) / 100),
+      walk: Math.round((totalInfo[0].Walk * 100) / 100),
     });
   } catch (e) {
     console.log(e);
@@ -42,7 +46,6 @@ router.get("/get", auth, async (req, res) => {
   } catch (e) {
     res.status(500).send("Internal server error");
   }
-  res.status(200).send(result);
 });
 router.get("/get/:entry", auth, async (req, res) => {
   const ent = req.params.entry;

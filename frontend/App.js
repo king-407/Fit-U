@@ -7,6 +7,7 @@ import Login from './Authentication/Login';
 import Register from './Authentication/Register';
 import {addToken} from './reducers/authReducer';
 import Dashboard from './AfterLogin/Dashboard';
+import Info from './AfterLogin/Info';
 const Stack = createStackNavigator();
 
 const App = () => {
@@ -22,7 +23,10 @@ const App = () => {
           headerShown: false,
         }}>
         {token ? (
-          <Stack.Screen name="Dashboard" component={Dashboard} />
+          <>
+            <Stack.Screen name="Dashboard" component={Dashboard} />
+            <Stack.Screen name="Info" component={Info} />
+          </>
         ) : (
           <>
             <Stack.Screen name="Login" component={Login} />
